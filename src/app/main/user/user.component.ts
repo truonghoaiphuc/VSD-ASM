@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AuthenService } from 'src/app/core/services/authen.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
@@ -10,7 +10,31 @@ import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
 import { NgForm } from '@angular/forms';
 import { MessageContstants } from 'src/app/core/common/message.constants';
 import * as moment from 'moment';
-import { from } from 'rxjs';
+import { ModalDismissReasons, NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+@Component({
+  selector: 'ngbd-modal-content',
+  template: `
+    <div class="modal-header">
+      <h4 class="modal-title">Hi there!</h4>
+      <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>Hello, {{name}}!</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+    </div>
+  `
+})
+export class NgbdModalContent {
+  @Input() name;
+
+  constructor(public activeModal: NgbActiveModal) {}
+}
+
 
 @Component({
   selector: 'app-user',
@@ -18,7 +42,7 @@ import { from } from 'rxjs';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
-  @ViewChild('modalAddEdit', {static: false}) public modalAddEdit: BsModalRef;
+  @ViewChild('modalAddEdit', {static: false}) public modalAddEdit: ModalDirective;
   @ViewChild('avatar', {static: false}) avatar;
   public myRoles: string[] = [];
   public pageIndex: number = 1;
@@ -32,6 +56,8 @@ export class UserComponent implements OnInit {
   public allRoles: any[] = [];
   public roles: any[];
 
+  closeResult='';
+
   public dateOptions: any = {
     locale: { format: 'DD/MM/YYYY' },
     alwaysShowCalendars: false,
@@ -40,8 +66,8 @@ export class UserComponent implements OnInit {
 
   constructor(private _dataService: DataService,
     private _notificationService: NotificationService,
-    private modalService : BsModalService,
     private _utilityService: UtilityService,
+    private modalService: NgbModal,
     private _uploadService: UploadService, public _authenService: AuthenService) {
 
     if (_authenService.checkAccess('USER') == false) {
@@ -53,6 +79,29 @@ export class UserComponent implements OnInit {
     this.loadRoles();
     this.loadData();
   }
+
+  open(modalAddEdit) {
+this.modalService.open(modalAddEdit);
+
+    // this.modalService.open(content, {ariaLabelledBy: 'largeModalLabel'}).result.then((result) => {
+    //   this.closeResult = `Closed with: ${result}`;
+    // }, (reason) => {
+    //   this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    // });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
+
+
 
   loadData() {
     this._dataService.get('/api/appUser/getlistpaging?page=' + this.pageIndex + '&pageSize=' + this.pageSize + '&filter=' + this.filter)
@@ -80,21 +129,21 @@ export class UserComponent implements OnInit {
           this.myRoles.push(role);
         }
         this.entity.BirthDay = moment(new Date(this.entity.BirthDay)).format('DD/MM/YYYY');
-
-        console.log(this.entity.BirthDay);
+        console.log(this.entity.avatar);
       });
   }
   pageChanged(event: any): void {
     this.pageIndex = event.page;
     this.loadData();
   }
-  showAddModal(template: TemplateRef<any>) {
+  showAddModal(modalAddEdit) {
     this.entity = {};
-    this.modalAddEdit = this.modalService.show(template);
+    const modalRef = this.modalService.open(modalAddEdit, {size:'lg'});
+    console.log(this.entity.Id);
   }
-  showEditModal(id: any, template: TemplateRef<any>) {
+  showEditModal(modalAddEdit,id: any) {
     this.loadUserDetail(id);
-    this.modalAddEdit = this.modalService.show(template);
+    const modalRef = this.modalService.open(modalAddEdit, {size:'lg'});
   }
   saveChange(form: NgForm) {
     if (form.valid) {

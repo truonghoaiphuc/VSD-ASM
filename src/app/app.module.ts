@@ -14,6 +14,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { UserModule } from './main/user/user.module';
 import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
+import { HotToastModule } from '@ngneat/hot-toast';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -26,11 +28,14 @@ import { BsModalService, ModalModule } from 'ngx-bootstrap/modal';
     MainModule,
     HomeModule,
     UserModule,
+    NgbModule,
     ModalModule,
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    HotToastModule.forRoot(),
+    ToastrModule.forRoot(),
+    HotToastModule.forRoot()
   ],
   providers: [NotificationService, BsModalService],
   bootstrap: [AppComponent]

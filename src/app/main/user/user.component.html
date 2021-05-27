@@ -1,12 +1,10 @@
 <!-- Basic Table -->
 <div class="row clearfix">
   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <div class="card">
-          <div class="header">
-              <h2>
-                  Danh sách người dùng
-              </h2>
-              <!-- <ul class="header-dropdown m-r--5">
+    <div class="card">
+      <div class="header">
+        <h2>Danh sách người dùng</h2>
+        <!-- <ul class="header-dropdown m-r--5">
                   <li class="dropdown">
                       <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                           <i class="material-icons">more_vert</i>
@@ -18,71 +16,178 @@
                       </ul>
                   </li>
               </ul> -->
-              <div class="row clearfix">
-              <div class="title_right">
-                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                  <div class="input-group">
-                    <input type="text" class="form-control" name="filter" (keyup.enter)="loadData()" [(ngModel)]="filter" placeholder="Gõ tên quyền...">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" (click)="loadData()" type="button">Tìm!</button>
-                     </span>
-                  </div>
-                </div>
+        <div class="row clearfix">
+          <div class="title_right">
+            <div
+              class="
+                col-md-5 col-sm-5 col-xs-12
+                form-group
+                pull-right
+                top_search
+              "
+            >
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="filter"
+                  (keyup.enter)="loadData()"
+                  [(ngModel)]="filter"
+                  placeholder="Gõ tên quyền..."
+                />
+                <span class="input-group-btn">
+                  <button
+                    class="btn btn-default"
+                    (click)="loadData()"
+                    type="button"
+                  >
+                    Tìm!
+                  </button>
+                </span>
               </div>
+            </div>
           </div>
-          <button type="button" class="btn btn-default waves-effect m-r-20" data-toggle="modal" (click)="showAddModal(modalAddEdit)">MODAL - LARGE SIZE</button>
-          <div class="body table-responsive">
-              <table class="table table-hover">
-                  <thead>
-                      <tr>
-                          <th>Avatar</th>
-                          <th>Tài khoản</th>
-                          <th>Họ tên</th>
-                          <th>Email</th>
-                          <th>Ngày sinh</th>
-                          <th>Số điện thoại</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      <tr *ngFor="let user of users">
-                        <td><img [src]="user.Avatar" width="48" height="48" alt="User" style="border-radius: 50%;" /></td>
-                        <td>{{user.UserName}}</td>
-                        <td>{{user.FullName}}</td>
-                        <td>{{user.Email}}</td>
-                        <td>{{user.BirthDay}}</td>
-                        <td>{{user.PhoneNumber}}</td>
-                        <td>
-                          <button class="btn btn-primary"  *ngIf="_authenService.hasPermission('USER','update')" (click)="showEditModal(modalAddEdit,user.Id)"><i class="fa fa-pencil-square-o"></i></button>
-                          <button class="btn btn-danger"  *ngIf="_authenService.hasPermission('USER','delete')" (click)="deleteItem(user.Id)"><i class="fa fa-trash"></i></button>
-                        </td>
-                      </tr>
-                  </tbody>
-              </table>
-          </div>
-      </div>
-  </div>
-</div>
-<!-- #END# Basic Table -->
-<!-- <ng-template #modalAddEdit> -->
-  <div #modalAddEdit class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="largeModalLabel">Thêm/Sửa người dùng</h4>
-            </div>
-            <div class="modal-body">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sodales orci ante, sed ornare eros vestibulum ut. Ut accumsan
-                vitae eros sit amet tristique. Nullam scelerisque nunc enim, non dignissim nibh faucibus ullamcorper.
-                Fusce pulvinar libero vel ligula iaculis ullamcorper. Integer dapibus, mi ac tempor varius, purus
-                nibh mattis erat, vitae porta nunc nisi non tellus. Vivamus mollis ante non massa egestas fringilla.
-                Vestibulum egestas consectetur nunc at ultricies. Morbi quis consectetur nunc.
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button>
-                <button type="button" class="btn btn-link waves-effect" (click)="this.modalAddEdit.hide()" data-dismiss="modal">CLOSE</button>
-            </div>
         </div>
+        <button
+          type="button"
+          class="btn btn-default waves-effect m-r-20"
+          (click)="showAddModal(modalAddEdit)"
+        >
+          MODAL - LARGE SIZE
+        </button>
+        <div class="body table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Avatar</th>
+                <th>Tài khoản</th>
+                <th>Họ tên</th>
+                <th>Email</th>
+                <th>Ngày sinh</th>
+                <th>Số điện thoại</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of users">
+                <td>
+                  <img
+                    [src]="baseFolder+user.Avatar"
+                    width="48"
+                    height="48"
+                    alt="User"
+                    style="border-radius: 50%"
+                  />
+                </td>
+                <td>{{ user.UserName }}</td>
+                <td>{{ user.FullName }}</td>
+                <td>{{ user.Email }}</td>
+                <td>{{ user.BirthDay}}</td>
+                <td>{{ user.PhoneNumber }}</td>
+                <td>
+                  <button
+                    class="btn btn-lg btn-primary"
+                    *ngIf="_authenService.hasPermission('USER', 'update')"
+                    (click)="showEditModal(modalAddEdit, user.Id)"
+                  >
+                    <i class="fa fa-pencil-square-o"></i>
+                  </button>
+                  <button
+                    class="btn btn-danger"
+                    *ngIf="_authenService.hasPermission('USER', 'delete')"
+                    (click)="deleteItem(user.Id)"
+                  >
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
-<!-- </ng-template> -->
+</div>
+
+<ng-template #modalAddEdit let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Thêm/Sửa người dùng</h4>
+        <button type="button" class="close pull-right" (click)="modal.dismiss('Cross click')" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body pull-left">
+        <div>
+          <img [src]="baseFolder+entity.Avatar" width="128" />
+        </div>
+        <div>
+          <form novalidate #addEditForm="ngForm" (ngSubmit)="saveChange(addEditForm)">
+            <label for="UserName">Tài khoản</label>
+            <div class="form-group">
+                <div class="form-line">
+                    <input type="text" #UserName="ngModel" [(ngModel)]="entity.UserName" required minlength="3" name="UserName" class="form-control">
+                </div>
+            </div>
+            <label for="name">Họ tên</label>
+            <div class="form-group">
+                <div class="form-line">
+                    <input type="text" #name="ngModel" [(ngModel)]="entity.FullName" required minlength="3" name="name" class="form-control">
+                </div>
+            </div>
+            <div *ngIf="!entity.Id">
+              <label for="password">Mật khẩu</label>
+              <div class="form-group">
+                  <div class="form-line">
+                      <input type="password" #password="ngModel" [(ngModel)]="entity.Password" required minlength="6" name="password" class="form-control">
+                  </div>
+              </div>
+            </div>
+            <div *ngIf="!entity.Id">
+              <label for="ConfirmPassword">Xác nhận mật khẩu</label>
+              <div class="form-group" >
+                  <div class="form-line">
+                      <input type="password" #confirmpassword="ngModel" [(ngModel)]="entity.ConfirmPassword" required minlength="6" name="ConfirmPassword" class="form-control">
+                  </div>
+              </div>
+            </div>
+            <label for="email_address">Email Address</label>
+            <div class="form-group">
+                <div class="form-line">
+                    <input type="text" #Email="ngModel" [(ngModel)]="entity.Email" required name="Email" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+              <label for="avatar">Avatar</label>
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <input type="file" #avatar name="avatar" class="form-control">
+                <p class="label-danger"> chỉ hỗ trợ định dạng *.png, *.jpg, *.jpeg </p>
+                <input type="hidden" [(ngModel)]="entity.Avatar" name="avatarUrl" />
+              </div>
+
+              <div class="col-md-3 col-sm-3 col-xs-12" *ngIf="entity.Avatar">
+                <img [src]="baseFolder+entity.Avatar" width="128" />
+              </div>
+            </div>
+            <label for="address">Địa chỉ</label>
+            <div class="form-group">
+                <div class="form-line">
+                    <input type="text" #Address="ngModel" [(ngModel)]="entity.Address" name="Address" class="form-control">
+                </div>
+            </div>
+              <div class="input-group">
+                  <span class="input-group-addon">
+                      Số điện thoại
+                  </span>
+                  <div class="form-line">
+                      <input type="text" #PhoneNumber="ngModel" [(ngModel)]="entity.PhoneNumber" name="PhoneNumber" data-inputmask="'alias': 'datetime'" class="form-control mobile-phone-number">
+                  </div>
+              </div>
+        </form>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success waves-effect" [disabled]="!addEditForm.form.valid"><i class="material-icons">add_circle</i><span class="icon-name">Cập nhật</span></button>
+        <button type="button" class="btn btn-danger waves-effect" (click)="modal.dismiss('Cross click')" ><i class="material-icons">cancel</i><span class="icon-name">Hủy bỏ</span></button>
+      </div>
+</ng-template>
 

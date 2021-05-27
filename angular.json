@@ -28,7 +28,8 @@
             ],
             "styles": [
               "./node_modules/ngx-toastr/toastr.css",
-              "./src/assets/css/bootstrap.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/jquery.steps/dist/jquery-steps.css",
               "./node_modules/node-waves/dist/waves.css",
               "./src/assets/css/animate.css",
               "./src/styles.css",
@@ -36,9 +37,11 @@
               "./src/assets/css/themes/all-themes.css"
             ],
             "scripts": [
-              "./src/assets/js/jquery.js",
-              "./src/assets/js/bootstrap.js",
+              "node_modules/jquery/dist/jquery.js",
+              "node_modules/bootstrap/dist/js/bootstrap.js",
               "./node_modules/bootstrap-select/dist/js/bootstrap-select.js",
+              "node_modules/jquery.steps/dist/jquery-steps.js",
+              "node_modules/inputmask/dist/jquery.inputmask.js",
               "./node_modules/node-waves/dist/waves.js",
               "./node_modules/jquery-validation/dist/jquery.validate.js",
               "./node_modules/jquery-slimscroll/jquery.slimscroll.js",
