@@ -117,9 +117,6 @@
       </div>
       <div class="modal-body pull-left">
         <div>
-          <img [src]="baseFolder+entity.Avatar" width="128" />
-        </div>
-        <div>
           <form novalidate #addEditForm="ngForm" (ngSubmit)="saveChange(addEditForm)">
             <label for="UserName">Tài khoản</label>
             <div class="form-group">
@@ -149,6 +146,12 @@
                   </div>
               </div>
             </div>
+            <label for="BirthDay">Ngày sinh</label>
+            <div class="form-group">
+                <div class="form-line">
+                    <input type="text" #BirthDay="ngModel" [(ngModel)]="entity.BirthDay" name="BirthDay" class="form-control">
+                </div>
+            </div>
             <label for="email_address">Email Address</label>
             <div class="form-group">
                 <div class="form-line">
@@ -157,9 +160,9 @@
             </div>
             <div class="form-group">
               <label for="avatar">Avatar</label>
-              <div class="col-md-6 col-sm-6 col-xs-12">
+              <div>
                 <input type="file" #avatar name="avatar" class="form-control">
-                <p class="label-danger"> chỉ hỗ trợ định dạng *.png, *.jpg, *.jpeg </p>
+                <p class="danger"> chỉ hỗ trợ định dạng *.png, *.jpg, *.jpeg </p>
                 <input type="hidden" [(ngModel)]="entity.Avatar" name="avatarUrl" />
               </div>
 
@@ -173,14 +176,12 @@
                     <input type="text" #Address="ngModel" [(ngModel)]="entity.Address" name="Address" class="form-control">
                 </div>
             </div>
-              <div class="input-group">
-                  <span class="input-group-addon">
-                      Số điện thoại
-                  </span>
-                  <div class="form-line">
-                      <input type="text" #PhoneNumber="ngModel" [(ngModel)]="entity.PhoneNumber" name="PhoneNumber" data-inputmask="'alias': 'datetime'" class="form-control mobile-phone-number">
-                  </div>
-              </div>
+            <label for="PhoneNumber">Số điện thoại</label>
+            <div class="form-group">
+                <div class="form-line">
+                    <input type="text" #PhoneNumber="ngModel" [(ngModel)]="entity.PhoneNumber" name="PhoneNumber" class="form-control">
+                </div>
+            </div>
         </form>
         </div>
 
